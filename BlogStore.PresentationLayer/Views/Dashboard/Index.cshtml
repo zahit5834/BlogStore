@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h3>Kategorilere Göre Blog Sayısı</h3>
+<div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        fetch('/Dashboard/GetBlogCategoryCounts')
+            .then(response => response.json())
+            .then(data => {
+                const chartData = [['Kategori', 'Blog Sayısı']];
+                data.forEach(item => {
+                    chartData.push([item.categoryName, item.blogCount]);
+                });
+
+                const dataTable = google.visualization.arrayToDataTable(chartData);
+
+                const options = {
+                    title: 'Kategorilere Göre Blog Sayısı',
+                    legend: { position: 'none' },
+                    hAxis: { title: 'Kategori' },
+                    bar: { groupWidth: '25%' },
+                    vAxis: { title: 'Blog Sayısı', minValue: 0 }
+
+                };
+
+                const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                chart.draw(dataTable, options);
+            });
+    }
+</script>

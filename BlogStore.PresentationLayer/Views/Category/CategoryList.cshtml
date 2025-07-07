@@ -1,0 +1,30 @@
+﻿@model List<BlogStore.EntityLayer.Entities.Category>
+@{
+    ViewData["Title"] = "GetProfile";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+
+<section class="section posts-entry posts-entry-sm bg-light">
+    <div class="container">
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <a href="/Default/Index/@item.CategoryId">
+                        <div class="cart border border-dark rounded p-3 mb-3">
+                            <div class="cart-body">
+                                <div class="blog-entry">
+                                    <h2><a href="/Default/Index/@item.CategoryId">@item.CategoryName</a></h2>
+                                    <p><a href="/Default/Index/@item.CategoryId" class="read-more">Blogları Görüntüle</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+            }
+        </div>
+    </div>
+</section>
