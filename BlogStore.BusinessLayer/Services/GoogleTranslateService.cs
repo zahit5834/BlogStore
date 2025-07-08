@@ -14,15 +14,17 @@ namespace BlogStore.BusinessLayer.Services
     public class GoogleTranslateService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
 
-        public GoogleTranslateService(HttpClient httpClient)
+        public GoogleTranslateService(HttpClient httpClient, string apiKey)
         {
             _httpClient = httpClient;
+            _apiKey = apiKey;
         }
 
         public async Task<string> TraslateToEngAsync(string text)
         {
-            var url = $"https://translation.googleapis.com/language/translate/v2?key=AIzaSyDBeRNB4qRGBXuy4JZxpUpu9WqR9Hz8WGA";
+            var url = $"https://translation.googleapis.com/language/translate/v2?key={_apiKey}";
 
             var requestBody = new
             {
