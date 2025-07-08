@@ -24,5 +24,11 @@ namespace BlogStore.DataAccessLayer.EntityFramework
             var values = _context.Comments.Include(x=>x.AppUser).Include(y=>y.Article).Where(z=>z.ArticleId==id).ToList();
             return values;
         }
+
+        async Task ICommentDal.InsertAsync(Comment comment)
+        {
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+        }
     }
 }

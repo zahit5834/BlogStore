@@ -5,6 +5,7 @@ using BlogStore.PresentationLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BlogStore.PresentationLayer.Controllers
 {
@@ -24,7 +25,7 @@ namespace BlogStore.PresentationLayer.Controllers
         }
         [HttpPost]
         [Authorize]
-        public IActionResult CreateComment([FromBody] CreateCommentViewModel commentModel)
+        public async Task<IActionResult> CreateComment([FromBody] CreateCommentViewModel commentModel)
         {
 
             if(ModelState.IsValid && commentModel != null && !string.IsNullOrEmpty(commentModel.CommentDetail) && commentModel.ArticleId > 0)
@@ -36,9 +37,6 @@ namespace BlogStore.PresentationLayer.Controllers
                     IsValid = true,
 
                 };
-                Console.WriteLine(User.FindFirst(ClaimTypes.Name)?.Value ?? "Anonim");
-                Console.WriteLine(commentModel.CommentDetail);
-                Console.WriteLine(commentModel.ArticleId);
                 comment.CommentDate = DateTime.Now;
 
                 // Kullanıcı bilgisi ekle (isteğe bağlı)
@@ -46,7 +44,7 @@ namespace BlogStore.PresentationLayer.Controllers
 
 
 
-                _commentService.TInsert(comment);
+                await _commentService.TInsertAsync(comment);
 
                 return Json(new { success = true, message = "Yorum eklendi." });
             }

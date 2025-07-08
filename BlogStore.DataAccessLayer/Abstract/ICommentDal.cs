@@ -10,5 +10,6 @@ namespace BlogStore.DataAccessLayer.Abstract
     public interface ICommentDal : IGenericDal<Comment>
     {
         List<Comment> GetCommentsByArticle(int id);
+        Task InsertAsync(Comment comment);
     }
 }

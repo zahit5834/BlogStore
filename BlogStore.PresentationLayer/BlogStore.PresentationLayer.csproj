@@ -22,4 +22,10 @@
     <ProjectReference Include="..\BlogStore.BusinessLayer\BlogStore.BusinessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using BlogStore.BusinessLayer.Abstract;
+using BlogStore.BusinessLayer.Services;
 using BlogStore.DataAccessLayer.Abstract;
 using BlogStore.EntityLayer.Entities;
 using System;
@@ -12,10 +13,15 @@ namespace BlogStore.BusinessLayer.Concrete
     public class ArticleManager : IArticleService
     {
         private readonly IArticleDal _articleDal;
+        private readonly ToxicityChecker _toxicityChecker;
+        private readonly GoogleTranslateService _translateService;
 
-        public ArticleManager(IArticleDal articleDal)
+        public ArticleManager(IArticleDal articleDal, GoogleTranslateService translateService, ToxicityChecker toxicityChecker)
         {
             _articleDal = articleDal;
+            var googleApiKey = "AIzaSyDBeRNB4qRGBXuy4JZxpUpu9WqR9Hz8WGA";
+            _translateService = translateService;
+            _toxicityChecker = toxicityChecker;
         }
 
         public void TDelete(int id)
